@@ -31,8 +31,8 @@ public class BasicAuthHandler : AuthenticationHandler<AuthenticationSchemeOption
 
             if (!header.ToString().StartsWith("Basic"))
                 return AuthenticateResult.Fail("Not a basic auth token");
-
-            var token = header.ToString();
+    
+            var token = header.ToString().Substring("Basic ".Length).Trim();
 
             var (user, password) = _userAuthValidator.ParseBasicToken(token);
 
