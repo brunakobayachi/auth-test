@@ -1,9 +1,16 @@
 global using FastEndpoints;
 
 using FastEndpoints.Swagger;
-using FastEndpoints.Security;
+using FastEndpointsBasicAuthEf.Data;
+using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder();
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+});
+
 builder.Services
    .AddFastEndpoints()
    .SwaggerDocument();
